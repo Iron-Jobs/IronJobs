@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 
 /**
  * Created by vasantia on 8/3/16.
@@ -40,6 +41,9 @@ public class User {
     @Convert(converter = LocalDateTimeConverter.class)
     @ColumnDefault("'1970-01-01'")
     private LocalDateTime expiration;
+
+    @OneToMany
+    private Collection<Posting> postingCollection;
 
     public String generateToken() {
         SecureRandom random = new SecureRandom();
@@ -110,6 +114,13 @@ public class User {
         return token;
     }
 
+    public Collection<Posting> getPostingCollection() {
+        return postingCollection;
+    }
+
+    public void setPostingCollection(Collection<Posting> postingCollection) {
+        this.postingCollection = postingCollection;
+    }
 }
 
 
