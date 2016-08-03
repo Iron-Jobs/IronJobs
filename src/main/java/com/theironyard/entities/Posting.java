@@ -1,5 +1,6 @@
 package com.theironyard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.theironyard.utilities.LocalDateTimeConverter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "postings")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Posting {
 
     @Id
