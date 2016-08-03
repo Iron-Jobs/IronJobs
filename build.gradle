@@ -31,10 +31,13 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('com.h2database:h2')
-	runtime('org.postgresql:postgresql')
+	compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+task stage{
+	dependsOn build
+}
 
 eclipse {
 	classpath {
