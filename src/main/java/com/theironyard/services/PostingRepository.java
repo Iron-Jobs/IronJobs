@@ -11,8 +11,4 @@ import java.util.List;
  * Created by EddyJ on 8/3/16.
  */
 public interface PostingRepository extends JpaRepository<Posting, Integer> {
-
-//    List<Posting> findFirstByIdOrderByDateCreatedDesc();
-
-   //Collection<Posting> findByApplicants(User user);
 }
