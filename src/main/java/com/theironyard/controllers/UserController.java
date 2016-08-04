@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by EddyJ on 8/3/16.
@@ -36,8 +38,8 @@ public class UserController {
         List<User> userList = userRepository.findAll();
         return userList;
     }
-//    @RequestMapping(path = "/users/{id}",method = RequestMethod.GET)
-//    public String getUser(@RequestHeader  ){
+//    @RequestMapping(path = "/users/",method = RequestMethod.GET)
+//    public String getUser(@RequestHeader(value = "Authorization") String userToken){
 //
 //    }
 
@@ -47,10 +49,21 @@ public class UserController {
         if (user == null){
             user = new User(userCommand.getUsername(), PasswordStorage.createHash(userCommand.getPassword()));
             userRepository.save(user);
-        }else if (user == userRepository.findByUsername(userCommand.getUsername())){
-
         }
         return user;
+    }
+
+    @RequestMapping(path = "/token", method = RequestMethod.POST)
+    public Map getToken(@RequestBody UserCommand userCommand) throws Exception {
+        User user = checkLogin(userCommand);
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("token", user.getToken());
+        return tokens;
+    }
+    @RequestMapping(path = "/token/regenerate",method = RequestMethod.PUT)
+    public String regenerateToken(@RequestBody UserCommand userCommand) throws Exception{
+        User user = checkLogin(userCommand);
+        return user.regenerate();
     }
 
     public User checkLogin(UserCommand userCommand) throws PasswordStorage.InvalidHashException, PasswordStorage.CannotPerformOperationException {
