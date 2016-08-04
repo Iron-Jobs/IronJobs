@@ -1,6 +1,7 @@
 package com.theironyard.controllers;
 
 import com.theironyard.command.UserCommand;
+import com.theironyard.entities.Posting;
 import com.theironyard.entities.User;
 import com.theironyard.exceptions.LoginFailedException;
 import com.theironyard.exceptions.TokenExpiredException;
@@ -16,6 +17,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 /**
  * Created by EddyJ on 8/3/16.
@@ -38,10 +41,12 @@ public class UserController {
         List<User> userList = userRepository.findAll();
         return userList;
     }
-//    @RequestMapping(path = "/users/",method = RequestMethod.GET)
-//    public String getUser(@RequestHeader(value = "Authorization") String userToken){
-//
-//    }
+    @RequestMapping(path = "/users/{id}",method = RequestMethod.GET)
+    public User getUser(@RequestHeader(value = "Authorization") String userToken, @PathVariable Integer id){
+        getUserFromAuth(userToken);
+        User user = userRepository.findOne(id);
+        return user;
+    }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public User createUser(@RequestBody UserCommand userCommand) throws PasswordStorage.CannotPerformOperationException {
