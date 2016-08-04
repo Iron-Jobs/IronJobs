@@ -28,49 +28,49 @@ public class PostingController {
     @Autowired
     LocationRepository locationRepository;
 
-    @RequestMapping(path = "/postings", method = RequestMethod.POST)
-    public Posting posting(@RequestBody Posting posting) {
-        postingRepository.save(posting);
-        return posting;
-    }
-
-//    @RequestMapping(path = "/postings", method = RequestMethod.GET)
-//    List<Posting> showPostings() {
-//
-//        return postingRepository.findFirstByIdOrderByDateCreatedDesc();
+//    @RequestMapping(path = "/postings", method = RequestMethod.POST)
+//    public Posting posting(@RequestBody Posting posting) {
+//        postingRepository.save(posting);
+//        return posting;
 //    }
-
-    @RequestMapping(path = "/postings/{id}", method = RequestMethod.GET)
-    public Posting showSinglePosting(@PathVariable Integer id) {
-
-        return postingRepository.findOne(id);
-    }
-
-    @RequestMapping(path = "/postings/{id}", method = RequestMethod.PUT)
-    public Posting updatePosting(@PathVariable Integer id, @RequestBody PostingCommand command) {
-
-        Posting updatePosting = postingRepository.findOne(id);
-        if (updatePosting == null) {
-            throw new IdNotFoundException();
-        }
-
-        updatePosting.setTitle(command.getTitle());
-        updatePosting.setDescription(command.getDescription());
-        updatePosting.setSalaryStart(command.getSalaryStart());
-        updatePosting.setSalaryEnd(command.getSalaryEnd());
-        postingRepository.save(updatePosting);
-
-        return updatePosting;
-    }
-
-    @RequestMapping(path = "/postings/{id}", method = RequestMethod.DELETE)
-    public void deletePosting(@PathVariable int id) {
-
-        Posting deletePosting = postingRepository.findOne(id);
-        if (deletePosting == null) {
-            throw new IdNotFoundException();
-        }
-        postingRepository.delete(id);
-
-    }
+//
+////    @RequestMapping(path = "/postings", method = RequestMethod.GET)
+////    List<Posting> showPostings() {
+////
+////        return postingRepository.findFirstByIdOrderByDateCreatedDesc();
+////    }
+//
+//    @RequestMapping(path = "/postings/{id}", method = RequestMethod.GET)
+//    public Posting showSinglePosting(@PathVariable Integer id) {
+//
+//        return postingRepository.findOne(id);
+//    }
+//
+//    @RequestMapping(path = "/postings/{id}", method = RequestMethod.PUT)
+//    public Posting updatePosting(@PathVariable Integer id, @RequestBody PostingCommand command) {
+//
+//        Posting updatePosting = postingRepository.findOne(id);
+//        if (updatePosting == null) {
+//            throw new IdNotFoundException();
+//        }
+//
+//        updatePosting.setTitle(command.getTitle());
+//        updatePosting.setDescription(command.getDescription());
+//        updatePosting.setSalaryStart(command.getSalaryStart());
+//        updatePosting.setSalaryEnd(command.getSalaryEnd());
+//        postingRepository.save(updatePosting);
+//
+//        return updatePosting;
+//    }
+//
+//    @RequestMapping(path = "/postings/{id}", method = RequestMethod.DELETE)
+//    public void deletePosting(@PathVariable int id) {
+//
+//        Posting deletePosting = postingRepository.findOne(id);
+//        if (deletePosting == null) {
+//            throw new IdNotFoundException();
+//        }
+//        postingRepository.delete(id);
+//
+//    }
 }
