@@ -1,5 +1,6 @@
 package com.theironyard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.theironyard.utilities.LocalDateTimeConverter;
 
@@ -36,6 +37,7 @@ public class Posting {
     private LocalDateTime dateCreated;
 
     @ManyToMany
+    @JsonIgnore
     private Collection<User> applicants;
 
     @ManyToOne
