@@ -37,7 +37,7 @@ public class PostingController {
     @RequestMapping(path = "/postings", method = RequestMethod.GET)
     public List<Posting> showPostings(){
 
-        return postingRepository.findAll();
+        return postingRepository.findByIdOrderByDateCreatedDesc();
     }
     
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.GET)
