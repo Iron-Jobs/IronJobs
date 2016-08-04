@@ -33,6 +33,12 @@ public class PostingController {
         postingRepository.save(posting);
         return posting;
     }
+
+    @RequestMapping(path = "/postings", method = RequestMethod.GET)
+    public List<Posting> showPostings(){
+
+        return postingRepository.findAll();
+    }
     
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.GET)
     public Posting showSinglePosting(@PathVariable Integer id) {
