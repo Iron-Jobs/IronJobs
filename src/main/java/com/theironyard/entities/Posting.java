@@ -45,6 +45,7 @@ public class Posting {
     private Location location;
 
     public Posting() {
+        setCreated();
     }
 
     public Posting(String title, String description, Integer salaryStart, Integer salaryEnd, Location location) {
@@ -53,6 +54,7 @@ public class Posting {
         this.salaryStart = salaryStart;
         this.salaryEnd = salaryEnd;
         this.location = location;
+        setCreated();
     }
 
     public int getId() {
@@ -125,5 +127,9 @@ public class Posting {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public void setCreated(){
+        dateCreated = LocalDateTime.now();
     }
 }

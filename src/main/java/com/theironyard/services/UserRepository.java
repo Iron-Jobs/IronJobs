@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by EddyJ on 8/3/16.
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByUsername (String username);
+    User findFirstByToken(String token);
 }
