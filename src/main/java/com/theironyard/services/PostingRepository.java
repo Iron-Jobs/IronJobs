@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface PostingRepository extends JpaRepository<Posting, Integer> {
 
-    List<Posting> findByIdOrderByDateCreatedDesc();
+    List<Posting> findFirstByIdOrderByDateCreatedDesc();
 
-    Collection<Posting> findByApplicants(User user);
+   //Collection<Posting> findByApplicants(User user);
 }
