@@ -34,11 +34,11 @@ public class PostingController {
 //        return posting;
 //    }
 //
-////    @RequestMapping(path = "/postings", method = RequestMethod.GET)
-////    List<Posting> showPostings() {
-////
-////        return postingRepository.findFirstByIdOrderByDateCreatedDesc();
-////    }
+//    @RequestMapping(path = "/postings", method = RequestMethod.GET)
+//    List<Posting> showPostings() {
+//
+//        return postingRepository.findFirstByIdOrderByDateCreatedDesc();
+//    }
 //
 //    @RequestMapping(path = "/postings/{id}", method = RequestMethod.GET)
 //    public Posting showSinglePosting(@PathVariable Integer id) {
