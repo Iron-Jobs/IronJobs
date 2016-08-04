@@ -48,6 +48,13 @@ public class UserController {
         return user;
     }
 
+    @RequestMapping(path = "/users/{id}/postings",method = RequestMethod.GET)
+    public List<Posting> showAllUserPostings(@PathVariable Integer id){
+        User user = userRepository.findOne(id);
+        List<Posting> usersPostingList = postingRepository.findByOwner(user);
+        return  usersPostingList;
+    }
+
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public User createUser(@RequestBody UserCommand userCommand) throws PasswordStorage.CannotPerformOperationException {
         User user = userRepository.findByUsername(userCommand.getUsername());
