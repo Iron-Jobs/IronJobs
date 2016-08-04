@@ -11,6 +11,11 @@ import java.util.List;
  * Created by EddyJ on 8/3/16.
  */
 public interface PostingRepository extends JpaRepository<Posting, Integer> {
+<<<<<<< HEAD
 
 
+=======
+    List<Posting> findByOwner(User user);
+    List<Posting> findByApplicants(User user);
+>>>>>>> master
 }

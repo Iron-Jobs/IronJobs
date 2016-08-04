@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,20 @@ public class UserController {
         getUserFromAuth(userToken);
         User user = userRepository.findOne(id);
         return user;
+    }
+
+    @RequestMapping(path = "/users/{id}/postings",method = RequestMethod.GET)
+    public List<Posting> showAllUserPostings(@RequestHeader(value = "Authorization") String userToken,@PathVariable Integer id){
+        User user = userRepository.findOne(id);
+        List<Posting> usersPostingList = postingRepository.findByOwner(user);
+        return  usersPostingList;
+    }
+
+    @RequestMapping(path = "/users/{id}/applications",method = RequestMethod.GET)
+    public List<Posting> showAllJobsAppliedFor(@RequestHeader(value = "Authorization") String userToken,@PathVariable Integer id){
+        User user = userRepository.findOne(id);
+        List<Posting> usersAppliedJobsList = postingRepository.findByApplicants(user);
+        return usersAppliedJobsList;
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
