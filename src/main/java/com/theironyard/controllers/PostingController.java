@@ -24,6 +24,8 @@ public class PostingController {
     @Autowired
     LocationRepository locationRepository;
 
+
+
     
 
 }
