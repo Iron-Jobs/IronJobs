@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface PostingRepository extends JpaRepository<Posting, Integer> {
     List<Posting> findByOwner(User user);
+    List<Posting> findByApplicants(User user);
 }
