@@ -9,9 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class IronJobsApplicationTests {
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> f43c5689efbe5d5dccb215e6c9f7e273452cd94f
+	@Test
+	public void contextLoads() {
+	}
 
 }
