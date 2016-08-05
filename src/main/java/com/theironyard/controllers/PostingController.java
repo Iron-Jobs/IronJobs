@@ -1,6 +1,7 @@
 package com.theironyard.controllers;
 
 import com.theironyard.command.PostingCommand;
+import com.theironyard.entities.Location;
 import com.theironyard.entities.Posting;
 import com.theironyard.exceptions.IdNotFoundException;
 import com.theironyard.services.LocationRepository;
@@ -51,6 +52,22 @@ public class PostingController {
     public Posting showSinglePosting(@PathVariable Integer id) {
 
         return postingRepository.findOne(id);
+    }
+
+    @RequestMapping(path = "/postings/filter", method = RequestMethod.GET)
+    public List<Posting> filterBySalaryAndLocation(Integer salaryStart, Location location){
+        List<Posting> postingList = postingRepository.findAllByOrderByDateCreatedDesc();
+
+        if(location != null && salaryStart != null){
+            postingList = postingRepository.findAllBySalaryStartGreaterThanAndLocationContaining(salaryStart, location);
+        }
+        else if(location != null) {
+            postingList = postingRepository.findAllByLocationContaining(location);
+        }
+        else if(salaryStart != null){
+            postingList = postingRepository.findAllBySalaryStartGreaterThan(salaryStart);
+                }
+        return postingList;
     }
 
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.PUT)
