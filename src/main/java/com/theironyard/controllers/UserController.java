@@ -64,12 +64,13 @@ public class UserController {
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
-    public User createUser(@RequestBody UserCommand userCommand) throws PasswordStorage.CannotPerformOperationException {
+    public User createUser(@RequestBody UserCommand userCommand) throws PasswordStorage.CannotPerformOperationException, PasswordStorage.InvalidHashException {
         User user = userRepository.findByUsername(userCommand.getUsername());
         if (user == null){
             user = new User(userCommand.getUsername(), PasswordStorage.createHash(userCommand.getPassword()));
             userRepository.save(user);
         }
+        checkLogin(userCommand);
         return user;
     }
 
@@ -85,6 +86,9 @@ public class UserController {
         User user = checkLogin(userCommand);
         return user.regenerate();
     }
+
+//    @RequestMapping(path = "/users/{id}/posting/{id}", method = RequestMethod.PUT)
+//    public Posting applyToPosting(){}
 
     public User checkLogin(UserCommand userCommand) throws PasswordStorage.InvalidHashException, PasswordStorage.CannotPerformOperationException {
         User user = userRepository.findByUsername(userCommand.getUsername());
