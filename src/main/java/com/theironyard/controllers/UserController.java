@@ -73,11 +73,23 @@ public class UserController {
         return user;
     }
 
+    @RequestMapping(path = "/users/posting/{id}", method = RequestMethod.PUT)
+    public Posting applyToPosting(@RequestHeader(value = "Authorization") String userToken, Integer postingId){
+        User applicant = getUserFromAuth(userToken);
+        Posting posting = postingRepository.findOne(postingId);
+        applicant.addPostingToCollection(posting);
+        posting.addUserToCollection(applicant);
+        userRepository.save(applicant);
+        postingRepository.save(posting);
+        return posting;
+    }
+
     @RequestMapping(path = "/token", method = RequestMethod.POST)
     public Map getToken(@RequestBody UserCommand userCommand) throws Exception {
         User user = checkLogin(userCommand);
         Map<String, String> tokens = new HashMap<>();
         tokens.put("token", user.getToken());
+        tokens.put("username", user.getUsername());
         return tokens;
     }
     @RequestMapping(path = "/token/regenerate",method = RequestMethod.PUT)
@@ -85,13 +97,6 @@ public class UserController {
         User user = checkLogin(userCommand);
         return user.regenerate();
     }
-
-//    @RequestMapping(path = "/users/{id}/posting/{id}", method = RequestMethod.PUT)
-//    public Posting applyToPosting(@RequestHeader(value = "Authorization") String userToken, @PathVariable Integer userId,
-//                                  Integer postingId, UserCommand userCommand){
-//        getUserFromAuth(userToken);
-//
-//    }
 
     public User checkLogin(UserCommand userCommand) throws PasswordStorage.InvalidHashException, PasswordStorage.CannotPerformOperationException {
         User user = userRepository.findByUsername(userCommand.getUsername());
