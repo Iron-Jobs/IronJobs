@@ -35,9 +35,16 @@ public class PostingController {
     }
 
     @RequestMapping(path = "/postings", method = RequestMethod.GET)
-    public List<Posting> showPostings(){
-
-        return postingRepository.findAllByOrderByDateCreatedDesc();
+    public List<Posting> showPostings(String salaryStart){
+        List<Posting> postingList = postingRepository.findAllByOrderByDateCreatedDesc();
+        if(salaryStart != null){
+            if (salaryStart.equalsIgnoreCase("Asc")){
+                postingList = postingRepository.findAllByOrderBySalaryStartAsc();
+            } else if (salaryStart.equalsIgnoreCase("Desc")){
+                postingList = postingRepository.findAllByOrderBySalaryStartDesc();
+            }
+        }
+        return postingList;
     }
     
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.GET)

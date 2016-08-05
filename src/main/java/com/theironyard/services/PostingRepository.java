@@ -15,4 +15,6 @@ public interface PostingRepository extends JpaRepository<Posting, Integer> {
     List<Posting> findByOwner(User user);
     List<Posting> findByApplicants(User user);
     List<Posting> findAllByOrderByDateCreatedDesc();
+    List<Posting> findAllByOrderBySalaryStartAsc();
+    List<Posting> findAllByOrderBySalaryStartDesc();
 }
