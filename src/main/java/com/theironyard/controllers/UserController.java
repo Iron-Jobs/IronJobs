@@ -37,28 +37,27 @@ public class UserController {
     @Autowired
     LocationRepository locationRepository;
 
-    @RequestMapping(path = "/users", method = RequestMethod.GET)
+    @RequestMapping(path = "/users/all", method = RequestMethod.GET)
     public List<User> getAllUsers(){
         List<User> userList = userRepository.findAll();
         return userList;
     }
-    @RequestMapping(path = "/users/{id}",method = RequestMethod.GET)
-    public User getUser(@RequestHeader(value = "Authorization") String userToken, @PathVariable Integer id){
-        getUserFromAuth(userToken);
-        User user = userRepository.findOne(id);
+    @RequestMapping(path = "/users",method = RequestMethod.GET)
+    public User getUser(@RequestHeader(value = "Authorization") String userToken){
+        User user = getUserFromAuth(userToken);
         return user;
     }
 
-    @RequestMapping(path = "/users/{id}/postings",method = RequestMethod.GET)
-    public List<Posting> showAllUserPostings(@RequestHeader(value = "Authorization") String userToken,@PathVariable Integer id){
-        User user = userRepository.findOne(id);
+    @RequestMapping(path = "/users/postings",method = RequestMethod.GET)
+    public List<Posting> showAllUserPostings(@RequestHeader(value = "Authorization") String userToken){
+        User user = getUserFromAuth(userToken);
         List<Posting> usersPostingList = postingRepository.findByOwner(user);
         return  usersPostingList;
     }
 
-    @RequestMapping(path = "/users/{id}/applications",method = RequestMethod.GET)
-    public List<Posting> showAllJobsAppliedFor(@RequestHeader(value = "Authorization") String userToken,@PathVariable Integer id){
-        User user = userRepository.findOne(id);
+    @RequestMapping(path = "/users/applications",method = RequestMethod.GET)
+    public List<Posting> showAllJobsAppliedFor(@RequestHeader(value = "Authorization") String userToken){
+        User user = getUserFromAuth(userToken);
         List<Posting> usersAppliedJobsList = postingRepository.findByApplicants(user);
         return usersAppliedJobsList;
     }
@@ -88,7 +87,11 @@ public class UserController {
     }
 
 //    @RequestMapping(path = "/users/{id}/posting/{id}", method = RequestMethod.PUT)
-//    public Posting applyToPosting(){}
+//    public Posting applyToPosting(@RequestHeader(value = "Authorization") String userToken, @PathVariable Integer userId,
+//                                  Integer postingId, UserCommand userCommand){
+//        getUserFromAuth(userToken);
+//
+//    }
 
     public User checkLogin(UserCommand userCommand) throws PasswordStorage.InvalidHashException, PasswordStorage.CannotPerformOperationException {
         User user = userRepository.findByUsername(userCommand.getUsername());
