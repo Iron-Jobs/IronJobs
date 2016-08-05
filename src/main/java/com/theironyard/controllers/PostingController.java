@@ -36,14 +36,13 @@ public class PostingController {
     public Posting posting(@RequestHeader(value = "Authorization") String userToken,@RequestBody Posting posting) {
         User user = getUserFromAuth(userToken);
         posting.setOwner(user);
-        postingRepository.save(posting);
         Location location = locationRepository.findByCity(posting.getLocation().getCity());
         if (location == null){
             location = new Location(posting.getLocation().getCity(), posting.getLocation().getState());
-            locationRepository.save(location);
         }
-        location.addPostingToCollection(posting);
         locationRepository.save(location);
+        posting.setLocation(location);
+        postingRepository.save(posting);
         return posting;
     }
 
