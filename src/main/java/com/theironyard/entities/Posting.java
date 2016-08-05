@@ -134,4 +134,8 @@ public class Posting {
     public void setCreated(){
         dateCreated = LocalDateTime.now();
     }
+
+    public void addUserToCollection (User user){
+        applicants.add(user);
+    }
 }

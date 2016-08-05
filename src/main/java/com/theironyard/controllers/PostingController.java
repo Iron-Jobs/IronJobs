@@ -1,5 +1,6 @@
 package com.theironyard.controllers;
 
+import com.theironyard.command.LocationCommand;
 import com.theironyard.command.PostingCommand;
 import com.theironyard.entities.Location;
 import com.theironyard.entities.Posting;
@@ -30,8 +31,15 @@ public class PostingController {
     LocationRepository locationRepository;
 
     @RequestMapping(path = "/postings", method = RequestMethod.POST)
-    public Posting posting(@RequestBody Posting posting) {
+    public Posting posting(@RequestBody Posting posting, @RequestBody LocationCommand locationCommand) {
         postingRepository.save(posting);
+        Location location = locationRepository.findByCity(locationCommand.getCity());
+        if (location == null){
+            location = new Location(locationCommand.getCity(), locationCommand.getState());
+            locationRepository.save(location);
+        }
+        location.addPostingToCollection(posting);
+        locationRepository.save(location);
         return posting;
     }
 

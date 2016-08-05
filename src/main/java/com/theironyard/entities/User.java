@@ -121,6 +121,10 @@ public class User {
     public void setPostingCollection(Collection<Posting> postingCollection) {
         this.postingCollection = postingCollection;
     }
+
+    public void addPostingToCollection(Posting posting){
+        postingCollection.add(posting);
+    }
 }
 
 
