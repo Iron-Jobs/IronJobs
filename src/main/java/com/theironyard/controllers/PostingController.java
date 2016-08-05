@@ -4,7 +4,9 @@ import com.theironyard.command.LocationCommand;
 import com.theironyard.command.PostingCommand;
 import com.theironyard.entities.Location;
 import com.theironyard.entities.Posting;
+import com.theironyard.entities.User;
 import com.theironyard.exceptions.IdNotFoundException;
+import com.theironyard.exceptions.TokenExpiredException;
 import com.theironyard.services.LocationRepository;
 import com.theironyard.services.PostingRepository;
 import com.theironyard.services.UserRepository;
@@ -31,11 +33,13 @@ public class PostingController {
     LocationRepository locationRepository;
 
     @RequestMapping(path = "/postings", method = RequestMethod.POST)
-    public Posting posting(@RequestBody Posting posting, @RequestBody LocationCommand locationCommand) {
+    public Posting posting(@RequestHeader(value = "Authorization") String userToken,@RequestBody Posting posting) {
+        User user = getUserFromAuth(userToken);
+        posting.setOwner(user);
         postingRepository.save(posting);
-        Location location = locationRepository.findByCity(locationCommand.getCity());
+        Location location = locationRepository.findByCity(posting.getLocation().getCity());
         if (location == null){
-            location = new Location(locationCommand.getCity(), locationCommand.getState());
+            location = new Location(posting.getLocation().getCity(), posting.getLocation().getState());
             locationRepository.save(location);
         }
         location.addPostingToCollection(posting);
@@ -104,5 +108,12 @@ public class PostingController {
         }
         postingRepository.delete(id);
 
+    }
+    public User getUserFromAuth(String userToken){
+        User user = userRepository.findFirstByToken(userToken.split(" ")[1]);
+        if(!user.isTokenValid()){
+            throw new TokenExpiredException();
+        }
+        return user;
     }
 }
