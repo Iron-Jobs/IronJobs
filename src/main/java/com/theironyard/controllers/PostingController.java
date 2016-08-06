@@ -81,6 +81,22 @@ public class PostingController {
         return postingList;
     }
 
+    @RequestMapping(path = "/postings/search", method = RequestMethod.GET)
+    public List<Posting> searchByTitleAndLocation(String title, Location location){
+        List<Posting> postingList = postingRepository.findAllByOrderByDateCreatedDesc();
+
+        if(title != null && location != null){
+            postingList = postingRepository.findAllByTitleContainingAndLocationContaining(title, location);
+        }
+        else if(location != null) {
+            postingList = postingRepository.findAllByLocationContaining(location);
+        }
+        else if(title != null){
+            postingList = postingRepository.findAllByTitleContaining(title);
+        }
+        return postingList;
+    }
+
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.PUT)
     public Posting updatePosting(@PathVariable Integer id, @RequestBody PostingCommand command) {
 

@@ -21,4 +21,6 @@ public interface PostingRepository extends JpaRepository<Posting, Integer> {
     List<Posting> findAllBySalaryStartGreaterThan(Integer salaryStart);
     List<Posting> findAllByLocationContaining(Location location);
     List<Posting> findAllBySalaryStartGreaterThanAndLocationContaining(Integer salaryStart, Location location);
+    List<Posting> findAllByTitleContainingAndLocationContaining(String title, Location location);
+    List<Posting> findAllByTitleContaining(String title);
 }
