@@ -21,6 +21,7 @@ public class Message {
     @GeneratedValue
     private int id;
 
+    @Column
     private int replyId;
 
     @Column(nullable = false)
