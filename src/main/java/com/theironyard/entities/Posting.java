@@ -47,6 +47,7 @@ public class Posting {
     private Location location;
 
     @OneToMany
+    @JsonIgnore
     private Collection<Message> messageCollection;
 
     public Posting() {

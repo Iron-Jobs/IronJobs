@@ -1,6 +1,7 @@
 package com.theironyard.controllers;
 
 import com.theironyard.entities.Message;
+import com.theironyard.entities.Posting;
 import com.theironyard.entities.User;
 import com.theironyard.exceptions.TokenExpiredException;
 import com.theironyard.services.LocationRepository;
@@ -30,15 +31,19 @@ public class MessageController {
     @Autowired
     MessageRepository messageRepository;
 
-//    @RequestMapping(path = "/messages", method = RequestMethod.POST)
-//    public Message message(@RequestHeader(value = "Authorization") String userToken, @RequestBody Message message){
-//
-//        User user = getUserFromAuth(userToken);
-//        message.setApplicants();
-//
-//        messageRepository.save(message);
-//        return message;
-//    }
+    @RequestMapping(path = "/messages/posting{id}", method = RequestMethod.POST)
+    public Message createMessage(@RequestHeader(value = "Authorization") String userToken, @RequestBody Message message, @PathVariable Integer id){
+        User user = getUserFromAuth(userToken);
+        Posting posting = postingRepository.findOne(id);
+
+        
+        message.addUserToCollection(user);
+
+        messageRepository.save(message);
+        return message;
+    }
+
+    @RequestMapping(path = "/messages")
 
 
     public User getUserFromAuth(String userToken){
