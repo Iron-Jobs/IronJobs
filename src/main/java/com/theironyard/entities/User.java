@@ -43,9 +43,11 @@ public class User {
     private LocalDateTime expiration;
 
     @OneToMany
+    @JsonIgnore
     private Collection<Posting> postingCollection;
 
     @OneToMany
+    @JsonIgnore
     private Collection<Message> messageCollection;
 
     public String generateToken() {
