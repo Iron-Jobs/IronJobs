@@ -35,7 +35,7 @@ public class IronJobsApplicationTests {
 	@Autowired
 	UserRepository userRepository;
 
-	MockMvc mockMvc;
+	//MockMvc mockMvc;
 
 //	@Test
 //	public void testLogin() throws Exception {
