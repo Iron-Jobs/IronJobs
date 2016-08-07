@@ -46,6 +46,9 @@ public class Posting {
     @ManyToOne
     private Location location;
 
+    @OneToMany
+    private Collection<Message> messageCollection;
+
     public Posting() {
         setCreated();
     }
@@ -137,5 +140,13 @@ public class Posting {
 
     public void addUserToCollection (User user){
         applicants.add(user);
+    }
+
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
     }
 }

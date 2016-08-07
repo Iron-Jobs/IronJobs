@@ -21,7 +21,6 @@ public class Message {
     @GeneratedValue
     private int id;
 
-    @GeneratedValue
     private int replyId;
 
     @Column(nullable = false)
@@ -38,9 +37,15 @@ public class Message {
     @JsonIgnore
     private Collection<User> applicants;
 
-    @OneToMany
+    @ManyToOne
     @JsonIgnore
-    private Collection<Posting> postings;
+    private Posting postings;
+
+    @ManyToOne
+    private Message originalMessage;
+
+    @OneToMany
+    private Collection<Message> messages;
 
     public Message() {
         setCreated();
@@ -99,11 +104,11 @@ public class Message {
         this.applicants = applicants;
     }
 
-    public Collection<Posting> getPostings() {
+    public Posting getPostings() {
         return postings;
     }
 
-    public void setPostings(Collection<Posting> postings) {
+    public void setPostings(Posting postings) {
         this.postings = postings;
     }
 
@@ -113,5 +118,21 @@ public class Message {
 
     public void addUserToCollection (User user){
         applicants.add(user);
+    }
+
+    public Message getOriginalMessage() {
+        return originalMessage;
+    }
+
+    public void setOriginalMessage(Message originalMessage) {
+        this.originalMessage = originalMessage;
+    }
+
+    public Collection<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Collection<Message> messages) {
+        this.messages = messages;
     }
 }

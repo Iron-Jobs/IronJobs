@@ -2,6 +2,7 @@ package com.theironyard.controllers;
 
 import com.theironyard.entities.Location;
 import com.theironyard.services.LocationRepository;
+import com.theironyard.services.MessageRepository;
 import com.theironyard.services.PostingRepository;
 import com.theironyard.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class LocationController {
 
     @Autowired
     LocationRepository locationRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     @RequestMapping(path = "/locations", method = RequestMethod.GET)
     public List<Location> getAllLocations(){

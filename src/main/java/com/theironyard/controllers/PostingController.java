@@ -8,6 +8,7 @@ import com.theironyard.entities.User;
 import com.theironyard.exceptions.IdNotFoundException;
 import com.theironyard.exceptions.TokenExpiredException;
 import com.theironyard.services.LocationRepository;
+import com.theironyard.services.MessageRepository;
 import com.theironyard.services.PostingRepository;
 import com.theironyard.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class PostingController {
 
     @Autowired
     LocationRepository locationRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     @RequestMapping(path = "/postings", method = RequestMethod.POST)
     public Posting posting(@RequestHeader(value = "Authorization") String userToken,@RequestBody Posting posting) {

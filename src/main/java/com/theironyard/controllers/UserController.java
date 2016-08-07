@@ -7,6 +7,7 @@ import com.theironyard.exceptions.LoginFailedException;
 import com.theironyard.exceptions.TokenExpiredException;
 import com.theironyard.exceptions.UserNotFoundException;
 import com.theironyard.services.LocationRepository;
+import com.theironyard.services.MessageRepository;
 import com.theironyard.services.PostingRepository;
 import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
@@ -36,6 +37,9 @@ public class UserController {
 
     @Autowired
     LocationRepository locationRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     @RequestMapping(path = "/users/all", method = RequestMethod.GET)
     public List<User> getAllUsers(){

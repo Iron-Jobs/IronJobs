@@ -45,6 +45,9 @@ public class User {
     @OneToMany
     private Collection<Posting> postingCollection;
 
+    @OneToMany
+    private Collection<Message> messageCollection;
+
     public String generateToken() {
         SecureRandom random = new SecureRandom();
         return new BigInteger(130, random).toString(32);
@@ -124,6 +127,14 @@ public class User {
 
     public void addPostingToCollection(Posting posting){
         postingCollection.add(posting);
+    }
+
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
     }
 }
 
