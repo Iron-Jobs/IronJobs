@@ -6,10 +6,7 @@ import com.theironyard.services.MessageRepository;
 import com.theironyard.services.PostingRepository;
 import com.theironyard.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +32,11 @@ public class LocationController {
     @RequestMapping(path = "/locations", method = RequestMethod.GET)
     public List<Location> getAllLocations(){
         return locationRepository.findAll();
+    }
+
+    @RequestMapping(path = "/locations/{city}/{state}", method = RequestMethod.GET)
+    public Location getLocationId(@PathVariable String city, @PathVariable String state){
+        Location location = locationRepository.findByCityAndState(city, state);
+        return location;
     }
 }

@@ -107,11 +107,12 @@ public class PostingController {
         return postingList;
     }
 
-    @RequestMapping(path = "postings/searchs/location/{location}",method = RequestMethod.GET)
-    public List<Posting> searchByLocation(@PathVariable Location location){
-        List<Posting> postingList = postingRepository.findAllByLocationContaining(location.getCity(), location.getState());
-        return postingList;
-    }
+//    @RequestMapping(path = "postings/searchs/location/{id}",method = RequestMethod.GET)
+//    public List<Posting> searchByLocation(@PathVariable int id){
+//        List<Posting> postingList = postingRepository.findAllByLocation()
+//        return postingList;
+//    }
+
 
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.PUT)
     public Posting updatePosting(@PathVariable Integer id, @RequestBody PostingCommand command) {
