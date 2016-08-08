@@ -1,5 +1,7 @@
 package com.theironyard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -21,6 +23,7 @@ public class Location {
     private String state;
 
     @OneToMany
+    @JsonIgnore
     private Collection<Posting> postingCollection;
 
     public Location() {
