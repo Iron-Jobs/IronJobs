@@ -113,7 +113,7 @@ public class PostingController {
         List<Posting> postingList = postingRepository.findAllByLocation(location);
         return postingList;
     }
-
+    
     @RequestMapping(path = "/postings/{id}", method = RequestMethod.PUT)
     public Posting updatePosting(@PathVariable Integer id, @RequestBody PostingCommand command) {
 
