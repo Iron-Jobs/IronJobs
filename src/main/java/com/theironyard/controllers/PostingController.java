@@ -99,7 +99,7 @@ public class PostingController {
 //    }
 
 
-    @RequestMapping(path = "postings/searchs/title/{title}", method = RequestMethod.GET)
+    @RequestMapping(path = "searches/title/{title}", method = RequestMethod.GET)
     public List<Posting> searchByTitle(@PathVariable String title){
         List<Posting> postingList = postingRepository.findAllByTitleContaining(title);
         return postingList;
