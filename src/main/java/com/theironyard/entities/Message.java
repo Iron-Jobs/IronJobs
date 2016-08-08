@@ -32,6 +32,7 @@ public class Message {
     private LocalDateTime dateCreated;
 
     @ManyToOne
+    @JsonIgnore
     private User owner;
 
     @ManyToMany
@@ -43,9 +44,11 @@ public class Message {
     private Posting postings;
 
     @ManyToOne
+    @JsonIgnore
     private Message originalMessage;
 
     @OneToMany
+    @JsonIgnore
     private Collection<Message> messages;
 
     public Message() {
