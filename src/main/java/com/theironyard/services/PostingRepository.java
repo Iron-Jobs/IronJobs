@@ -22,7 +22,6 @@ public interface PostingRepository extends JpaRepository<Posting, Integer> {
     List<Posting> findAllByLocationContaining(Location location);
     List<Posting> findAllByTitleContainingAndLocationContaining(String title, Location location);
     List<Posting> findAllByTitleContaining(String title);
-    List<Posting> findAllByLocation(Location location);
     List<Posting> findAllByLocationContaining(String city, String state);
     List<Posting> findAllByLocation(Location location);
 }
