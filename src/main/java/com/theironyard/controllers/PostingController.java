@@ -109,7 +109,7 @@ public class PostingController {
 
     @RequestMapping(path = "postings/searchs/location/{location}",method = RequestMethod.GET)
     public List<Posting> searchByLocation(@PathVariable Location location){
-        List<Posting> postingList = postingRepository.findAllByLocationContaining(location);
+        List<Posting> postingList = postingRepository.findAllByLocationContaining(location.getCity(), location.getState());
         return postingList;
     }
 
