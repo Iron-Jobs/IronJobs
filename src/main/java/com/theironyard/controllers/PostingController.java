@@ -69,22 +69,19 @@ public class PostingController {
         return postingRepository.findOne(id);
     }
 
-    @RequestMapping(path = "/postings/filter", method = RequestMethod.GET)
-    public List<Posting> filterBySalaryAndLocation(Integer salaryStart, Location location){
-        List<Posting> postingList = postingRepository.findAllByOrderByDateCreatedDesc();
-
-        if(location != null && salaryStart != null){
-            postingList = postingRepository.findAllBySalaryStartGreaterThanAndLocationContaining(salaryStart, location);
-        }
-        else if(location != null) {
-            postingList = postingRepository.findAllByLocationContaining(location);
-        }
-        else if(salaryStart != null){
-            postingList = postingRepository.findAllBySalaryStartGreaterThan(salaryStart);
-                }
+    @RequestMapping(path = "/postings/filter/{salaryStart}", method = RequestMethod.GET)
+    public List<Posting> filterBySalary(@PathVariable int salaryStart){
+        List<Posting> postingList = postingRepository.findAllBySalaryStartGreaterThanEqual(salaryStart);
         return postingList;
     }
-//
+
+    @RequestMapping(path = "postings/filter/location/{id}",method = RequestMethod.GET)
+    public List<Posting> filterByLocation(@PathVariable int id){
+        Location location = locationRepository.findOne(id);
+        List<Posting> postingList = postingRepository.findAllByLocation(location);
+        return postingList;
+    }
+
 //    @RequestMapping(path = "/postings/search", method = RequestMethod.GET)
 //    public List<Posting> searchByTitleAndLocation(String title, Location location){
 //        List<Posting> postingList = postingRepository.findAllByOrderByDateCreatedDesc();
@@ -101,16 +98,10 @@ public class PostingController {
 //        return postingList;
 //    }
 
-    @RequestMapping(path = "postings/searchs/title/{title}", method = RequestMethod.GET)
+
+    @RequestMapping(path = "postings/searches/title/{title}", method = RequestMethod.GET)
     public List<Posting> searchByTitle(@PathVariable String title){
         List<Posting> postingList = postingRepository.findAllByTitleContaining(title);
-        return postingList;
-    }
-
-    @RequestMapping(path = "postings/searchs/location/{id}",method = RequestMethod.GET)
-    public List<Posting> searchByLocation(@PathVariable int id){
-        Location location = locationRepository.findOne(id);
-        List<Posting> postingList = postingRepository.findAllByLocation(location);
         return postingList;
     }
 
