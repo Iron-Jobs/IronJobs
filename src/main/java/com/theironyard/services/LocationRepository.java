@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface LocationRepository extends JpaRepository<Location, Integer> {
     Location findByCity(String city);
+    Location findByCityAndState(String city, String state);
 }
