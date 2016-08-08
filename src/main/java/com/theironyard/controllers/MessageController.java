@@ -1,5 +1,6 @@
 package com.theironyard.controllers;
 
+import com.theironyard.command.MessageCommand;
 import com.theironyard.entities.Message;
 import com.theironyard.entities.Posting;
 import com.theironyard.entities.User;
@@ -31,20 +32,42 @@ public class MessageController {
     @Autowired
     MessageRepository messageRepository;
 
-    @RequestMapping(path = "/messages/posting{id}", method = RequestMethod.POST)
-    public Message createMessage(@RequestHeader(value = "Authorization") String userToken, @RequestBody Message message, @PathVariable Integer id){
+    @RequestMapping(path = "/postings/{id}/messages", method = RequestMethod.POST)
+    public Posting addMessage(@RequestHeader(value = "Authorization") String userToken, @PathVariable int id,
+                              @RequestBody MessageCommand command) throws Exception {
         User user = getUserFromAuth(userToken);
         Posting posting = postingRepository.findOne(id);
-
-        
-        message.addUserToCollection(user);
-
+        if(posting == null){
+            throw new Exception("Posting doesn't exist");
+        }
+        Message message = new Message(command.getText());
+        message.setOwner(user);
         messageRepository.save(message);
-        return message;
+
+        posting.addMessage(message);
+        postingRepository.save(posting);
+
+        return posting;
     }
 
-    @RequestMapping(path = "/messages")
+    @RequestMapping(path = "/messages/{id}/reply", method = RequestMethod.POST)
+    public Message replyMessage(@RequestHeader(value = "Authorization") String userToken, @PathVariable int id,
+                                @RequestBody MessageCommand command) throws Exception {
 
+        User user = getUserFromAuth(userToken);
+        Message originalMessage = messageRepository.findOne(id);
+        if(originalMessage == null){
+            throw new Exception("Message doesn't exist");
+        }
+        Message replyMessage = new Message(command.getText());
+        replyMessage.setOwner(user);
+        messageRepository.save(replyMessage);
+
+        originalMessage.addReply(replyMessage);
+        messageRepository.save(originalMessage);
+
+        return originalMessage;
+    }
 
     public User getUserFromAuth(String userToken){
         User user = userRepository.findFirstByToken(userToken.split(" ")[1]);

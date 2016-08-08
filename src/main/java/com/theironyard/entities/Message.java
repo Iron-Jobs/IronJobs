@@ -136,4 +136,7 @@ public class Message {
     public void setMessages(Collection<Message> messages) {
         this.messages = messages;
     }
+
+    public void addReply(Message message)
+    { messages.add(message);}
 }

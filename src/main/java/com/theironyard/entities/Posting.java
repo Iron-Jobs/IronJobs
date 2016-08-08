@@ -150,4 +150,7 @@ public class Posting {
     public void setMessageCollection(Collection<Message> messageCollection) {
         this.messageCollection = messageCollection;
     }
+
+    public void addMessage(Message message)
+    { messageCollection.add(message);}
 }
