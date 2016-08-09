@@ -16,10 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -162,5 +168,36 @@ public class IronJobsApplicationTests {
 		);
 		assertEquals(posting, posting);
 	}
+
+//	@Test
+//	public void filterBySalaryStart() throws Exception {
+//		Posting posting = new Posting();
+//		posting.setTitle("TestPosting");
+//		posting.setDescription("TestDescription");
+//		posting.setSalaryStart(20000);
+//		posting.setSalaryEnd(40000);
+//		postingRepository.save(posting);
+//
+//		Posting posting2 = new Posting();
+//		posting.setTitle("TestPosting2");
+//		posting.setDescription("TestDescription2");
+//		posting.setSalaryStart(10000);
+//		posting.setSalaryEnd(40000);
+//		postingRepository.save(posting2);
+//
+//		Posting posting3 = new Posting();
+//		posting.setTitle("TestPosting3");
+//		posting.setDescription("TestDescription3");
+//		posting.setSalaryStart(25000);
+//		posting.setSalaryEnd(40000);
+//		postingRepository.save(posting3);
+//
+//		public List<Posting> resultList = new ArrayList<>();
+//
+//		mockMvc.perform(
+//				resultList = MockMvcRequestBuilders.get("/postings/filter/{salaryStart}")
+//		);
+//		assertTrue(resultList == 2);
+//	}
 
 }
